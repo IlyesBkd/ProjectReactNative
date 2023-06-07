@@ -2,6 +2,18 @@ import React, { useState } from 'react';
 import { Text, View, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
+const CalculatingBMR = (age, gender, height, weight) => {
+  let BMR;
+  if (gender === 'masculin') {
+    BMR = 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age;
+  } else if (gender === 'féminin') {
+    BMR = 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age;
+  } else {
+    BMR = null;
+  }
+  return BMR;
+};
+
 const HealthGoalsForm = () => {
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
@@ -36,6 +48,9 @@ const HealthGoalsForm = () => {
 
   const handleSubmit = () => {
     //TRAITEMENT APRES SOUMETTRE
+    let bmr = CalculatingBMR(age, gender, height, weight);
+    console.log('bmr = '+ bmr);
+
     setAge('');
     setGender('');
     setHeight('');
@@ -68,12 +83,12 @@ const HealthGoalsForm = () => {
       </View>
 
       <View>
-        <Text>Height</Text>
+        <Text>Height (in cm)</Text>
         <TextInput value={height} onChangeText={handleHeightChange} keyboardType="numeric" />
       </View>
 
       <View>
-        <Text>Weight</Text>
+        <Text>Weight (in kg)</Text>
         <TextInput value={weight} onChangeText={handleWeightChange} keyboardType="numeric" />
       </View>
 
