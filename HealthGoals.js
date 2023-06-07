@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const CalculatingBMR = (age, gender, height, weight) => {
+const CalculatingBMR = (age, gender, height, weight, activityLevel) => {
   let BMR;
   if (gender === 'masculin') {
     BMR = 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age;
@@ -10,6 +10,26 @@ const CalculatingBMR = (age, gender, height, weight) => {
     BMR = 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age;
   } else {
     BMR = null;
+  }
+
+  switch (activityLevel) {
+    case 'sedentary':
+      BMR *= 1.2;
+      break;
+    case 'light exercise':
+      BMR *= 1.375;
+      break;
+    case 'moderate exercise':
+      BMR *= 1.55;
+      break;
+    case 'exercice intense':
+      BMR *= 1.725;
+      break;
+    case 'Extra active':
+      BMR *= 1.9;
+      break;
+    default:
+      BMR = null;
   }
   return BMR;
 };
@@ -49,7 +69,7 @@ const HealthGoalsForm = () => {
   const handleSubmit = () => {
     //TRAITEMENT APRES SOUMETTRE
     let bmr = CalculatingBMR(age, gender, height, weight);
-    console.log('bmr = '+ bmr);
+    console.log('bmr = ' + bmr);
 
     setAge('');
     setGender('');
