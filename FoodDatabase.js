@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Text, Image } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text, Image, Modal } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,6 +18,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginBottom: 16,
   },
+  pickerContainer: {
+    width: '80%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 8,
+    marginBottom: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  picker: {
+    width: '100%',
+    height: 40,
+  },
 });
 
 const FoodDatabase = () => {
@@ -24,9 +39,18 @@ const FoodDatabase = () => {
   const [searchResults, setSearchResults] = useState(null);
   const [error, setError] = useState(null);
   const [selectedFoods, setSelectedFoods] = useState([]);
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedMeal, setSelectedMeal] = useState('');
+
+  const handleMealSelection = (meal) => {
+    setSelectedMeal(meal);
+  };
 
   const addToMealPlan = (food) => {
-    setSelectedFoods([...selectedFoods, food]);
+    const foodWithMeal = { label: food, meal: selectedMeal };
+    setSelectedFoods([...selectedFoods, foodWithMeal]);
+    setShowPicker(true);
+    console.log(selectedFoods);
   };
 
   const handleSearch = async () => {
@@ -38,7 +62,6 @@ const FoodDatabase = () => {
 
       if (data.hints.length > 0) {
         setSearchResults(data.hints[0].food);
-
         setError(null);
       } else {
         setSearchResults(null);
@@ -50,6 +73,10 @@ const FoodDatabase = () => {
       setError('An error occurred');
     }
     setSearchQuery('');
+  };
+
+  const handleAddToMealPlan = () => {
+    addToMealPlan(searchResults.label);
   };
 
   return (
@@ -70,7 +97,23 @@ const FoodDatabase = () => {
           {searchResults.image && (
             <Image source={{ uri: searchResults.image }} style={{ width: 200, height: 200 }} />
           )}
-          <Button title="Add to Meal Plan" onPress={() => addToMealPlan(searchResults.label)} />
+          <Button title="Add to Meal Plan" onPress={handleAddToMealPlan} />
+          <Modal visible={showPicker} animationType="slide">
+            <View style={styles.container}>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={selectedMeal}
+                  onValueChange={handleMealSelection}
+                  style={styles.picker}>
+                  <Picker.Item label="Breakfast" value="Breakfast" />
+                  <Picker.Item label="Lunch" value="Lunch" />
+                  <Picker.Item label="Dinner" value="Dinner" />
+                  <Picker.Item label="Snack" value="Snack" />
+                </Picker>
+              </View>
+              <Button title="Close" onPress={() => setShowPicker(false)} />
+            </View>
+          </Modal>
         </View>
       )}
     </View>
