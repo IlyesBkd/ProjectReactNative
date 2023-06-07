@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const CalculatingBMR = (age, gender, height, weight, activityLevel) => {
+const styles = StyleSheet.create({
+  result: {
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
+const CalculatingBMR = (age, gender, height, weight, activityLevel, healthGoal) => {
   let BMR;
   if (gender === 'masculin') {
     BMR = 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age;
@@ -31,6 +39,18 @@ const CalculatingBMR = (age, gender, height, weight, activityLevel) => {
     default:
       BMR = null;
   }
+
+  switch (healthGoal) {
+    case 'weight loss':
+      BMR -= 500;
+      break;
+    case 'weight gain':
+      BMR += 500;
+      break;
+    default:
+      break;
+  }
+
   return BMR;
 };
 
@@ -65,11 +85,9 @@ const HealthGoalsForm = () => {
   const handleHealthGoalChange = (value) => {
     setHealthGoal(value);
   };
-
+  let bmrCalculated;
   const handleSubmit = () => {
-    //TRAITEMENT APRES SOUMETTRE
-    let bmr = CalculatingBMR(age, gender, height, weight);
-    console.log('bmr = ' + bmr);
+    bmrCalculated = CalculatingBMR(age, gender, height, weight, activityLevel, healthGoal);
 
     setAge('');
     setGender('');
@@ -133,6 +151,8 @@ const HealthGoalsForm = () => {
       </View>
 
       <Button title="Submit" onPress={handleSubmit} disabled={!isFormValid} />
+
+      <Text style={styles.result}>Caloric Intake: {bmrCalculated} calories</Text>
     </View>
   );
 };
