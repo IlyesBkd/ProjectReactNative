@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import BMRResult from './BMRResult.js';
 
 const styles = StyleSheet.create({
   result: {
@@ -61,6 +62,7 @@ const HealthGoalsForm = () => {
   const [weight, setWeight] = useState('');
   const [activityLevel, setActivityLevel] = useState('');
   const [healthGoal, setHealthGoal] = useState('');
+  const [bmrCalculated, setBmrCalculated] = useState(null);
 
   const handleAgeChange = (text) => {
     setAge(text);
@@ -85,9 +87,10 @@ const HealthGoalsForm = () => {
   const handleHealthGoalChange = (value) => {
     setHealthGoal(value);
   };
-  let bmrCalculated;
+
   const handleSubmit = () => {
-    bmrCalculated = CalculatingBMR(age, gender, height, weight, activityLevel, healthGoal);
+    const bmrCalculated = CalculatingBMR(age, gender, height, weight, activityLevel, healthGoal);
+    setBmrCalculated(bmrCalculated);
 
     setAge('');
     setGender('');
@@ -152,7 +155,8 @@ const HealthGoalsForm = () => {
 
       <Button title="Submit" onPress={handleSubmit} disabled={!isFormValid} />
 
-      <Text style={styles.result}>Caloric Intake: {bmrCalculated} calories</Text>
+      {/* Affichez la valeur de BMR en utilisant le composant BMRResult */}
+      <BMRResult bmr={bmrCalculated} />
     </View>
   );
 };
