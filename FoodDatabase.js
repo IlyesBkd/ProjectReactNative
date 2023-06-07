@@ -41,16 +41,22 @@ const FoodDatabase = () => {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState('');
+  const [mealPlan, setMealPlan] = useState({
+    Breakfast: [],
+    Lunch: [],
+    Snack: [],
+    Dinner: [],
+  });
 
   const handleMealSelection = (meal) => {
     setSelectedMeal(meal);
   };
 
   const addToMealPlan = (food) => {
-    const foodWithMeal = { label: food, meal: selectedMeal };
+    const foodWithMeal = { ...food, meal: selectedMeal };
     setSelectedFoods([...selectedFoods, foodWithMeal]);
     setShowPicker(true);
-    console.log(selectedFoods);
+    //console.log(selectedFoods);
   };
 
   const handleSearch = async () => {
@@ -79,6 +85,14 @@ const FoodDatabase = () => {
     addToMealPlan(searchResults.label);
   };
 
+  const handleConfirm = () => {
+    const updatedMealPlan = { ...mealPlan };
+    updatedMealPlan[selectedMeal].push(searchResults.label);
+    setMealPlan(updatedMealPlan);
+    setShowPicker(false);
+    console.log(mealPlan);
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -98,22 +112,24 @@ const FoodDatabase = () => {
             <Image source={{ uri: searchResults.image }} style={{ width: 200, height: 200 }} />
           )}
           <Button title="Add to Meal Plan" onPress={handleAddToMealPlan} />
-          <Modal visible={showPicker} animationType="slide">
-            <View style={styles.container}>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  selectedValue={selectedMeal}
-                  onValueChange={handleMealSelection}
-                  style={styles.picker}>
-                  <Picker.Item label="Breakfast" value="Breakfast" />
-                  <Picker.Item label="Lunch" value="Lunch" />
-                  <Picker.Item label="Dinner" value="Dinner" />
-                  <Picker.Item label="Snack" value="Snack" />
-                </Picker>
+          {showPicker && (
+            <Modal visible={showPicker} animationType="slide">
+              <View style={styles.container}>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={selectedMeal}
+                    onValueChange={handleMealSelection}
+                    style={styles.picker}>
+                    <Picker.Item label="Breakfast" value="Breakfast" />
+                    <Picker.Item label="Lunch" value="Lunch" />
+                    <Picker.Item label="Dinner" value="Dinner" />
+                    <Picker.Item label="Snack" value="Snack" />
+                  </Picker>
+                </View>
+                <Button title="Confirm" onPress={handleConfirm} />
               </View>
-              <Button title="Close" onPress={() => setShowPicker(false)} />
-            </View>
-          </Modal>
+            </Modal>
+          )}
         </View>
       )}
     </View>
