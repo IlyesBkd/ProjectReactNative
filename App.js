@@ -4,6 +4,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './TabNavigator.js';
 
+//NOM APPLI : NutriPlanner
+
 export default function App() {
   return (
     <NavigationContainer>
