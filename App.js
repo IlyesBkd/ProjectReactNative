@@ -1,10 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native'; 
+import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './TabNavigator.js';
-
-
 
 export default function App() {
   return (
@@ -12,7 +10,7 @@ export default function App() {
       <TabNavigator />
     </NavigationContainer>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +20,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-
-

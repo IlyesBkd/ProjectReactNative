@@ -7,13 +7,13 @@ import FoodDatabase from './FoodDatabase.js';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-    return (
-      <Tab.Navigator>
-        <Tab.Screen name="Health Goals" component={HealthGoals} />
-        <Tab.Screen name="Food Database" component={FoodDatabase} />
-        <Tab.Screen name="Meal Planning" component={MealPlanning} />
-      </Tab.Navigator>
-    );
-  };
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Health Goals" component={HealthGoals} />
+      <Tab.Screen name="Food Database" component={FoodDatabase} />
+      <Tab.Screen name="Meal Planning" component={MealPlanning} />
+    </Tab.Navigator>
+  );
+};
 
-  export default TabNavigator;
+export default TabNavigator;
