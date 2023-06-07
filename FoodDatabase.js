@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text, Image } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,6 +23,11 @@ const FoodDatabase = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [error, setError] = useState(null);
+  const [selectedFoods, setSelectedFoods] = useState([]);
+
+  const addToMealPlan = (food) => {
+    setSelectedFoods([...selectedFoods, food]);
+  };
 
   const handleSearch = async () => {
     try {
@@ -31,8 +36,9 @@ const FoodDatabase = () => {
       );
       const data = await response.json();
 
-      if (data.parsed.length > 0) {
-        setSearchResults(data.parsed[0].food);
+      if (data.hints.length > 0) {
+        setSearchResults(data.hints[0].food);
+
         setError(null);
       } else {
         setSearchResults(null);
@@ -43,7 +49,6 @@ const FoodDatabase = () => {
       setSearchResults(null);
       setError('An error occurred');
     }
-
     setSearchQuery('');
   };
 
@@ -61,7 +66,11 @@ const FoodDatabase = () => {
       {searchResults && (
         <View>
           <Text>Food: {searchResults.label}</Text>
-          <Text>Caloric Intake: {searchResults.nutrients.ENERC_KCAL} calories</Text>
+          <Text>Number of Calories: {Math.round(searchResults.nutrients.ENERC_KCAL)} calories</Text>
+          {searchResults.image && (
+            <Image source={{ uri: searchResults.image }} style={{ width: 200, height: 200 }} />
+          )}
+          <Button title="Add to Meal Plan" onPress={() => addToMealPlan(searchResults.label)} />
         </View>
       )}
     </View>
