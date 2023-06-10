@@ -1,16 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigator from './TabNavigator.js';
-
-//NOM APPLI : NutriPlanner
+import { MealPlanContext } from './MealPlanningContext.js';
 
 export default function App() {
+  const [mealPlan, setMealPlan] = useState({
+    Breakfast: [],
+    Lunch: [],
+    Snack: [],
+    Dinner: [],
+  });
+
   return (
-    <NavigationContainer>
-      <TabNavigator />
-    </NavigationContainer>
+    <MealPlanContext.Provider value={{ mealPlan, setMealPlan }}>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </MealPlanContext.Provider>
   );
 }
 

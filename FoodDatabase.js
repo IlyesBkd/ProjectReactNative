@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, TextInput, Button, Text, Image, Modal } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { MealPlanContext } from './MealPlanningContext.js';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,12 +42,7 @@ const FoodDatabase = () => {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState('');
-  const [mealPlan, setMealPlan] = useState({
-    Breakfast: [],
-    Lunch: [],
-    Snack: [],
-    Dinner: [],
-  });
+  const { mealPlan, setMealPlan } = useContext(MealPlanContext);
 
   const handleMealSelection = (meal) => {
     setSelectedMeal(meal);
