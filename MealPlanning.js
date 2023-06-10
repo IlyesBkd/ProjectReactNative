@@ -9,10 +9,10 @@ const MealPlanning = () => {
     <View>
       {Object.entries(mealPlan).map(([day, meals]) => (
         <View key={day}>
-          <Text style={{ fontWeight: 'bold' }}>{day}</Text>
+          <Text>{day}</Text>
           {Object.entries(meals).map(([meal, foods]) => (
             <View key={meal}>
-              <Text style={{ fontWeight: 'bold' }}>{meal}</Text>
+              <Text>{meal}</Text>
               {foods.map((food, index) => (
                 <Text key={index}>{food}</Text>
               ))}
