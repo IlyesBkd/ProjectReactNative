@@ -41,11 +41,16 @@ const FoodDatabase = () => {
   const [error, setError] = useState(null);
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
-  const [selectedMeal, setSelectedMeal] = useState('');
+  const [selectedMeal, setSelectedMeal] = useState('Breakfast');
+  const [selectedDay, setSelectedDay] = useState('Monday');
   const { mealPlan, setMealPlan } = useContext(MealPlanContext);
 
   const handleMealSelection = (meal) => {
     setSelectedMeal(meal);
+  };
+
+  const handleDaySelection = (day) => {
+    setSelectedDay(day);
   };
 
   const addToMealPlan = (food) => {
@@ -83,7 +88,7 @@ const FoodDatabase = () => {
 
   const handleConfirm = () => {
     const updatedMealPlan = { ...mealPlan };
-    updatedMealPlan[selectedMeal].push(searchResults.label);
+    updatedMealPlan[selectedDay][selectedMeal].push(searchResults.label);
     setMealPlan(updatedMealPlan);
     setShowPicker(false);
     console.log(mealPlan);
@@ -120,6 +125,20 @@ const FoodDatabase = () => {
                     <Picker.Item label="Lunch" value="Lunch" />
                     <Picker.Item label="Dinner" value="Dinner" />
                     <Picker.Item label="Snack" value="Snack" />
+                  </Picker>
+                </View>
+                <View style={styles.pickerContainer}>
+                  <Picker
+                    selectedValue={selectedDay}
+                    onValueChange={handleDaySelection}
+                    style={styles.picker}>
+                    <Picker.Item label="Monday" value="Monday" />
+                    <Picker.Item label="Tuesday" value="Tuesday" />
+                    <Picker.Item label="Wednesday" value="Wednesday" />
+                    <Picker.Item label="Thursday" value="Thursday" />
+                    <Picker.Item label="Friday" value="Friday" />
+                    <Picker.Item label="Saturday" value="Saturday" />
+                    <Picker.Item label="Sunday" value="Sunday" />
                   </Picker>
                 </View>
                 <Button title="Confirm" onPress={handleConfirm} />

@@ -7,10 +7,48 @@ import { MealPlanContext } from './MealPlanningContext.js';
 
 export default function App() {
   const [mealPlan, setMealPlan] = useState({
-    Breakfast: [],
-    Lunch: [],
-    Snack: [],
-    Dinner: [],
+    Monday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Tuesday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Wednesday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Thursday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Friday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Saturday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Sunday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
   });
 
   return (
