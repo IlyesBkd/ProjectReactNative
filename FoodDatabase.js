@@ -88,7 +88,10 @@ const FoodDatabase = () => {
 
   const handleConfirm = () => {
     const updatedMealPlan = { ...mealPlan };
-    updatedMealPlan[selectedDay][selectedMeal].push(searchResults.label);
+    updatedMealPlan[selectedDay][selectedMeal].push({
+      label: searchResults.label,
+      calories: Math.round(searchResults.nutrients.ENERC_KCAL),
+    });
     setMealPlan(updatedMealPlan);
     setShowPicker(false);
     console.log(mealPlan);

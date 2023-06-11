@@ -1,9 +1,27 @@
 import React, { useContext } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { MealPlanContext } from './MealPlanningContext.js';
 
-const MealPlanning = () => {
-  const { mealPlan } = useContext(MealPlanContext);
+const MealPlanning = ({ navigation }) => {
+  const { mealPlan, setMealPlan } = useContext(MealPlanContext);
+
+  const calculateTotalCalories = (foods) => {
+    let totalCalories = 0;
+    foods.forEach((food) => {
+      totalCalories += food.calories;
+    });
+    return totalCalories;
+  };
+
+  const handleAddFood = () => {
+    navigation.navigate('FoodDatabase');
+  };
+
+  const handleRemoveFood = (day, meal, index) => {
+    const updatedMealPlan = { ...mealPlan };
+    updatedMealPlan[day][meal].splice(index, 1);
+    setMealPlan(updatedMealPlan);
+  };
 
   return (
     <View>
@@ -14,12 +32,17 @@ const MealPlanning = () => {
             <View key={meal}>
               <Text>{meal}</Text>
               {foods.map((food, index) => (
-                <Text key={index}>{food}</Text>
+                <View key={index}>
+                  <Text>{food.label}</Text>
+                  <Button title="Remove" onPress={() => handleRemoveFood(day, meal, index)} />
+                </View>
               ))}
             </View>
           ))}
+          <Text>Total Calories: {calculateTotalCalories(Object.values(meals).flat())}</Text>
         </View>
       ))}
+      <Button title="Add Food" onPress={handleAddFood} />
     </View>
   );
 };
