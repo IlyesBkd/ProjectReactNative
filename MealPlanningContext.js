@@ -1,51 +1,82 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Créez le contexte MealPlanContext
 export const MealPlanContext = createContext();
 
-// Créez le fournisseur du contexte MealPlanContext
 export const MealPlanProvider = ({ children }) => {
-  const [mealPlan, setMealPlan] = useState({});
+  const [mealPlan, setMealPlan] = useState({
+    Monday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Tuesday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Wednesday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Thursday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Friday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Saturday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Sunday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+  });
 
-  useEffect(() => {
-    // Récupérer le plan de repas au chargement de l'application
-    getSavedMealPlan();
-  }, []);
-
-  const saveMealPlan = async (mealPlan) => {
+  const saveMealPlanToStorage = async (plan) => {
     try {
-      const jsonMealPlan = JSON.stringify(mealPlan);
-      await AsyncStorage.setItem('mealPlan', jsonMealPlan);
-      console.log('Plan de repas sauvegardé avec succès');
+      await AsyncStorage.setItem('@mealPlan', JSON.stringify(plan));
     } catch (error) {
-      console.log('Erreur lors de la sauvegarde du plan de repas', error);
+      console.error('Error while saving meal plan to storage:', error);
     }
   };
 
-  const getMealPlan = async () => {
+  const getMealPlanFromStorage = async () => {
     try {
-      const jsonMealPlan = await AsyncStorage.getItem('mealPlan');
-      if (jsonMealPlan !== null) {
-        const mealPlan = JSON.parse(jsonMealPlan);
-        console.log('Plan de repas récupéré avec succès');
-        return mealPlan;
-      } else {
-        console.log('Aucun plan de repas trouvé');
-        return null;
+      const storedMealPlan = await AsyncStorage.getItem('@mealPlan');
+      if (storedMealPlan !== null) {
+        setMealPlan(JSON.parse(storedMealPlan));
       }
     } catch (error) {
-      console.log('Erreur lors de la récupération du plan de repas', error);
-      return null;
+      console.error('Error while retrieving meal plan from storage:', error);
     }
   };
 
-  const getSavedMealPlan = async () => {
-    const savedMealPlan = await getMealPlan();
-    if (savedMealPlan) {
-      setMealPlan(savedMealPlan);
+  useEffect(() => {
+    getMealPlanFromStorage();
+  }, []);
+
+  useEffect(() => {
+    if (mealPlan !== null) {
+      saveMealPlanToStorage(mealPlan);
     }
-  };
+  }, [mealPlan]);
 
   return (
     <MealPlanContext.Provider value={{ mealPlan, setMealPlan }}>
@@ -53,4 +84,3 @@ export const MealPlanProvider = ({ children }) => {
     </MealPlanContext.Provider>
   );
 };
-

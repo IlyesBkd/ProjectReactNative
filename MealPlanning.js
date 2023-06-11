@@ -1,16 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { MealPlanContext } from './MealPlanningContext.js';
+import { MealPlanContext } from './MealPlanningContext';
 
 const MealPlanning = () => {
-  const { mealPlan, setMealPlan } = useContext(MealPlanContext);
+  const { mealPlan, setMealPlan, saveMealPlanToStorage } = useContext(MealPlanContext);
   const navigation = useNavigation();
-
-  useEffect(() => {
-    // Récupérer le plan de repas au chargement de l'application
-    getSavedMealPlan();
-  }, []);
 
   const calculateTotalCalories = (foods) => {
     let totalCalories = 0;
@@ -21,21 +16,14 @@ const MealPlanning = () => {
   };
 
   const handleAddFood = () => {
-    navigation.push('FoodDatabase');
+    navigation.navigate('Food Database');
   };
 
   const handleRemoveFood = (day, meal, index) => {
     const updatedMealPlan = { ...mealPlan };
     updatedMealPlan[day][meal].splice(index, 1);
     setMealPlan(updatedMealPlan);
-    saveMealPlan(updatedMealPlan); // Sauvegarder le plan de repas après la suppression d'un aliment
-  };
-
-  const getSavedMealPlan = async () => {
-    const savedMealPlan = await getMealPlan();
-    if (savedMealPlan) {
-      setMealPlan(savedMealPlan);
-    }
+    //saveMealPlanToStorage(updatedMealPlan);
   };
 
   return (
@@ -50,7 +38,10 @@ const MealPlanning = () => {
               {foods.map((food, index) => (
                 <View key={index}>
                   <Text>{food.label}</Text>
-                  <Button title="Remove" onPress={() => handleRemoveFood(day, meal, index)} />
+                  <Button
+                    title="Remove"
+                    onPress={() => handleRemoveFood(day, meal, index)}
+                  />
                 </View>
               ))}
             </View>

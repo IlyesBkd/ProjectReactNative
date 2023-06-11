@@ -43,7 +43,7 @@ const FoodDatabase = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState('Breakfast');
   const [selectedDay, setSelectedDay] = useState('Monday');
-  const { mealPlan, setMealPlan } = useContext(MealPlanContext);
+  const { mealPlan, setMealPlan, saveMealPlanToStorage } = useContext(MealPlanContext);
 
   const handleMealSelection = (meal) => {
     setSelectedMeal(meal);
@@ -57,7 +57,6 @@ const FoodDatabase = () => {
     const foodWithMeal = { ...food, meal: selectedMeal };
     setSelectedFoods([...selectedFoods, foodWithMeal]);
     setShowPicker(true);
-    //console.log(selectedFoods);
   };
 
   const handleSearch = async () => {
@@ -93,8 +92,8 @@ const FoodDatabase = () => {
       calories: Math.round(searchResults.nutrients.ENERC_KCAL),
     });
     setMealPlan(updatedMealPlan);
+    //saveMealPlanToStorage(updatedMealPlan);
     setShowPicker(false);
-    console.log(mealPlan);
   };
 
   return (
