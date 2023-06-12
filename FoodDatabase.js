@@ -50,7 +50,7 @@ const FoodDatabase = () => {
         `https://api.edamam.com/auto-complete?app_id=190a734c&app_key=9115f8a7aefa3d9acc780dc40f6f3908&q=${query}&limit=3`
       );
 
-      const suggestions = response.data;
+      const suggestions = response.data.slice(0, 3);
       setSuggestions(suggestions);
     } catch (error) {
       console.error('Error while fetching autocomplete suggestions:', error);
