@@ -17,15 +17,15 @@ import { MealPlanContext } from './MealPlanningContext.js';
 const styles = StyleSheet.create({});
 
 const FoodDatabase = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchRequete, setSearchRequete] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [error, setError] = useState(null);
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState('Breakfast');
   const [selectedDay, setSelectedDay] = useState('Monday');
-  const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
-  const { mealPlan, setMealPlan, saveMealPlanToStorage } = useContext(MealPlanContext);
+  const [suggestions, setSuggestions] = useState([]);
+  const { mealPlan, setMealPlan } = useContext(MealPlanContext);
 
   const handleMealSelection = (meal) => {
     setSelectedMeal(meal);
@@ -42,8 +42,8 @@ const FoodDatabase = () => {
   };
 
   const handleInputChange = async (query) => {
-    setSearchQuery(query);
-    setAutocompleteSuggestions([]);
+    setSearchRequete(query);
+    setSuggestions([]);
 
     try {
       const response = await axios.get(
@@ -51,21 +51,21 @@ const FoodDatabase = () => {
       );
 
       const suggestions = response.data;
-      setAutocompleteSuggestions(suggestions);
+      setSuggestions(suggestions);
     } catch (error) {
       console.error('Error while fetching autocomplete suggestions:', error);
     }
   };
 
   const handleSearch = async () => {
-    if (searchQuery.trim() === '') {
+    if (searchRequete.trim() === '') {
       setError('Please enter a food to search');
       return;
     }
 
     try {
       const response = await fetch(
-        `https://api.edamam.com/api/food-database/v2/parser?app_id=190a734c&app_key=9115f8a7aefa3d9acc780dc40f6f3908&ingr=${searchQuery}&nutrition-type=cooking`
+        `https://api.edamam.com/api/food-database/v2/parser?app_id=190a734c&app_key=9115f8a7aefa3d9acc780dc40f6f3908&ingr=${searchRequete}&nutrition-type=cooking`
       );
       const data = await response.json();
 
@@ -81,7 +81,7 @@ const FoodDatabase = () => {
       setSearchResults(null);
       setError('An error occurred');
     }
-    setSearchQuery('');
+    setSearchRequete('');
   };
 
   const handleAddToMealPlan = () => {
@@ -103,8 +103,8 @@ const FoodDatabase = () => {
   };
 
   const handleSuggestionSelection = async (suggestion) => {
-    setSearchQuery(suggestion);
-    setAutocompleteSuggestions([]);
+    setSearchRequete(suggestion);
+    setSuggestions([]);
 
     try {
       const response = await fetch(
@@ -131,12 +131,12 @@ const FoodDatabase = () => {
       <TextInput
         style={styles.searchInput}
         placeholder="Search for a food"
-        value={searchQuery}
+        value={searchRequete}
         onChangeText={handleInputChange}
       />
 
       <FlatList
-        data={autocompleteSuggestions}
+        data={suggestions}
         keyExtractor={(item) => item}
         renderItem={({ item }) => (
           <TouchableOpacity

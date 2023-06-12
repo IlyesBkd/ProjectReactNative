@@ -94,7 +94,7 @@ const HealthGoalsForm = () => {
     setHealthGoal('');
   };
 
-  const isFormValid = () => {
+  const FormValid = () => {
     return (
       age !== '' &&
       gender !== '' &&
@@ -150,9 +150,8 @@ const HealthGoalsForm = () => {
         </Picker>
       </View>
 
-      <Button title="Submit" onPress={handleSubmit} disabled={!isFormValid} />
+      <Button title="Submit" onPress={handleSubmit} disabled={!FormValid} />
 
-      {/* Affichez la valeur de BMR en utilisant le composant BMRResult */}
       <BMRResult bmr={bmrCalculated} />
     </View>
   );

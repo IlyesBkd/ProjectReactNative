@@ -9,9 +9,9 @@ const MealPlanning = () => {
 
   const calculateTotalCalories = (foods) => {
     let totalCalories = 0;
-    foods.forEach((food) => {
+    for (const food of foods) {
       totalCalories += food.calories;
-    });
+    }
     return totalCalories;
   };
 

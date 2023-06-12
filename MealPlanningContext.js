@@ -49,32 +49,32 @@ export const MealPlanProvider = ({ children }) => {
     },
   });
 
-  const saveMealPlanToStorage = async (plan) => {
+  const saveMealPlanningToStorage = async (plan) => {
     try {
-      await AsyncStorage.setItem('@mealPlan', JSON.stringify(plan));
+      await AsyncStorage.setItem('@mealPlanning', JSON.stringify(plan));
     } catch (error) {
-      console.error('Error while saving meal plan to storage:', error);
+      console.error('Error while saving meal planning to storage:', error);
     }
   };
 
-  const getMealPlanFromStorage = async () => {
+  const getMealPlanningFromStorage = async () => {
     try {
-      const storedMealPlan = await AsyncStorage.getItem('@mealPlan');
-      if (storedMealPlan !== null) {
+      const storageMealPlan = await AsyncStorage.getItem('@mealPlanning');
+      if (storageMealPlan !== null) {
         setMealPlan(JSON.parse(storedMealPlan));
       }
     } catch (error) {
-      console.error('Error while retrieving meal plan from storage:', error);
+      console.error('Error while finding meal planning from storage:', error);
     }
   };
 
   useEffect(() => {
-    getMealPlanFromStorage();
+    getMealPlanningFromStorage();
   }, []);
 
   useEffect(() => {
     if (mealPlan !== null) {
-      saveMealPlanToStorage(mealPlan);
+        saveMealPlanningToStorage(mealPlan);
     }
   }, [mealPlan]);
 
