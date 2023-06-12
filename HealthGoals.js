@@ -100,13 +100,17 @@ const HealthGoalsForm = () => {
     setHealthGoal('');
   };
 
-  const isFormValid =
-    age !== '' &&
-    gender !== '' &&
-    height !== '' &&
-    weight !== '' &&
-    activityLevel !== '' &&
-    healthGoal !== '';
+
+  const isFormValid = () => {
+    return (
+      age !== '' &&
+      gender !== '' &&
+      height !== '' &&
+      weight !== '' &&
+      activityLevel !== '' &&
+      healthGoal !== ''
+    );
+  };
 
   return (
     <View>
