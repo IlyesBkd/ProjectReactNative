@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { MealPlanContext } from './MealPlanningContext';
 
 const MealPlanning = () => {
-  const { mealPlan, setMealPlan, saveMealPlanToStorage } = useContext(MealPlanContext);
+  const { mealPlan, setMealPlan} = useContext(MealPlanContext);
   const navigation = useNavigation();
 
   const calculateTotalCalories = (foods) => {
@@ -23,7 +23,6 @@ const MealPlanning = () => {
     const updatedMealPlan = { ...mealPlan };
     updatedMealPlan[day][meal].splice(index, 1);
     setMealPlan(updatedMealPlan);
-    //saveMealPlanToStorage(updatedMealPlan);
   };
 
   return (
