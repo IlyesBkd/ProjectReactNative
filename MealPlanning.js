@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { MealPlanContext } from './MealPlanningContext';
 
 const MealPlanning = () => {
-  const { mealPlan, setMealPlan} = useContext(MealPlanContext);
+  const { mealPlan, setMealPlan } = useContext(MealPlanContext);
   const navigation = useNavigation();
 
   const calculateTotalCalories = (foods) => {
@@ -37,10 +37,7 @@ const MealPlanning = () => {
               {foods.map((food, index) => (
                 <View key={index}>
                   <Text>{food.label}</Text>
-                  <Button
-                    title="Remove"
-                    onPress={() => handleRemoveFood(day, meal, index)}
-                  />
+                  <Button title="Remove" onPress={() => handleRemoveFood(day, meal, index)} />
                 </View>
               ))}
             </View>

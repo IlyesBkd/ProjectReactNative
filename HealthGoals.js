@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import BMRResult from './BMRResult.js';
 
-const styles = StyleSheet.create({
-});
+const styles = StyleSheet.create({});
 
 const CalculatingBMR = (age, gender, height, weight, activityLevel, healthGoal) => {
   let BMR;
@@ -15,7 +14,7 @@ const CalculatingBMR = (age, gender, height, weight, activityLevel, healthGoal) 
   } else {
     BMR = null;
   }
-  
+
   switch (activityLevel) {
     case 'sedentary':
       BMR *= 1.2;
@@ -94,7 +93,6 @@ const HealthGoalsForm = () => {
     setActivityLevel('');
     setHealthGoal('');
   };
-
 
   const isFormValid = () => {
     return (

@@ -1,12 +1,20 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, TextInput, Button, Text, Image, Modal, FlatList, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  Text,
+  Image,
+  Modal,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { MealPlanContext } from './MealPlanningContext.js';
 
-const styles = StyleSheet.create({
-});
-
+const styles = StyleSheet.create({});
 
 const FoodDatabase = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -126,15 +134,14 @@ const FoodDatabase = () => {
         value={searchQuery}
         onChangeText={handleInputChange}
       />
-      
+
       <FlatList
         data={autocompleteSuggestions}
         keyExtractor={(item) => item}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.suggestionItem}
-            onPress={() => handleSuggestionSelection(item)}
-          >
+            onPress={() => handleSuggestionSelection(item)}>
             <Text>{item}</Text>
           </TouchableOpacity>
         )}
@@ -158,8 +165,7 @@ const FoodDatabase = () => {
                 <Picker
                   style={styles.picker}
                   selectedValue={selectedMeal}
-                  onValueChange={handleMealSelection}
-                >
+                  onValueChange={handleMealSelection}>
                   <Picker.Item label="Breakfast" value="Breakfast" />
                   <Picker.Item label="Lunch" value="Lunch" />
                   <Picker.Item label="Dinner" value="Dinner" />
@@ -169,8 +175,7 @@ const FoodDatabase = () => {
                 <Picker
                   style={styles.picker}
                   selectedValue={selectedDay}
-                  onValueChange={handleDaySelection}
-                >
+                  onValueChange={handleDaySelection}>
                   <Picker.Item label="Monday" value="Monday" />
                   <Picker.Item label="Tuesday" value="Tuesday" />
                   <Picker.Item label="Wednesday" value="Wednesday" />
