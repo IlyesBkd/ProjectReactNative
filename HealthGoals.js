@@ -4,11 +4,6 @@ import { Picker } from '@react-native-picker/picker';
 import BMRResult from './BMRResult.js';
 
 const styles = StyleSheet.create({
-  result: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
 });
 
 const CalculatingBMR = (age, gender, height, weight, activityLevel, healthGoal) => {
@@ -20,7 +15,7 @@ const CalculatingBMR = (age, gender, height, weight, activityLevel, healthGoal) 
   } else {
     BMR = null;
   }
-
+  
   switch (activityLevel) {
     case 'sedentary':
       BMR *= 1.2;

@@ -5,45 +5,8 @@ import axios from 'axios';
 import { MealPlanContext } from './MealPlanningContext.js';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  searchInput: {
-    width: '80%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    marginBottom: 16,
-  },
-  pickerContainer: {
-    width: '80%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 8,
-    marginBottom: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  picker: {
-    width: '100%',
-    height: 40,
-  },
-  suggestionItem: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: 'lightgray', // Couleur de fond des suggestions
-    marginBottom: 2, // Espacement entre les suggestions
-  },
-  suggestionText: {
-    fontSize: 16,
-  },
 });
+
 
 const FoodDatabase = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -87,6 +50,11 @@ const FoodDatabase = () => {
   };
 
   const handleSearch = async () => {
+    if (searchQuery.trim() === '') {
+      setError('Please enter a food to search');
+      return;
+    }
+
     try {
       const response = await fetch(
         `https://api.edamam.com/api/food-database/v2/parser?app_id=190a734c&app_key=9115f8a7aefa3d9acc780dc40f6f3908&ingr=${searchQuery}&nutrition-type=cooking`
@@ -109,17 +77,21 @@ const FoodDatabase = () => {
   };
 
   const handleAddToMealPlan = () => {
-    addToMealPlan(searchResults.label);
+    if (searchResults) {
+      addToMealPlan(searchResults.label);
+    }
   };
 
   const handleConfirm = () => {
-    const updatedMealPlan = { ...mealPlan };
-    updatedMealPlan[selectedDay][selectedMeal].push({
-      label: searchResults.label,
-      calories: Math.round(searchResults.nutrients.ENERC_KCAL),
-    });
-    setMealPlan(updatedMealPlan);
-    setShowPicker(false);
+    if (searchResults) {
+      const updatedMealPlan = { ...mealPlan };
+      updatedMealPlan[selectedDay][selectedMeal].push({
+        label: searchResults.label,
+        calories: Math.round(searchResults.nutrients.ENERC_KCAL),
+      });
+      setMealPlan(updatedMealPlan);
+      setShowPicker(false);
+    }
   };
 
   const handleSuggestionSelection = async (suggestion) => {
@@ -154,8 +126,7 @@ const FoodDatabase = () => {
         value={searchQuery}
         onChangeText={handleInputChange}
       />
-  
-      {/* Autocomplete Suggestions */}
+      
       <FlatList
         data={autocompleteSuggestions}
         keyExtractor={(item) => item}
@@ -168,9 +139,9 @@ const FoodDatabase = () => {
           </TouchableOpacity>
         )}
       />
-  
+
       <Button title="Search" onPress={handleSearch} />
-  
+
       {error && <Text>{error}</Text>}
       {searchResults && (
         <View>
@@ -183,7 +154,32 @@ const FoodDatabase = () => {
           {showPicker && (
             <Modal visible={showPicker} animationType="slide">
               <View style={styles.container}>
-                {/* ... */}
+                <Text>Select Meal:</Text>
+                <Picker
+                  style={styles.picker}
+                  selectedValue={selectedMeal}
+                  onValueChange={handleMealSelection}
+                >
+                  <Picker.Item label="Breakfast" value="Breakfast" />
+                  <Picker.Item label="Lunch" value="Lunch" />
+                  <Picker.Item label="Dinner" value="Dinner" />
+                  <Picker.Item label="Snack" value="Snack" />
+                </Picker>
+                <Text>Select Day:</Text>
+                <Picker
+                  style={styles.picker}
+                  selectedValue={selectedDay}
+                  onValueChange={handleDaySelection}
+                >
+                  <Picker.Item label="Monday" value="Monday" />
+                  <Picker.Item label="Tuesday" value="Tuesday" />
+                  <Picker.Item label="Wednesday" value="Wednesday" />
+                  <Picker.Item label="Thursday" value="Thursday" />
+                  <Picker.Item label="Friday" value="Friday" />
+                  <Picker.Item label="Saturday" value="Saturday" />
+                  <Picker.Item label="Sunday" value="Sunday" />
+                </Picker>
+                <Button title="Confirm" onPress={handleConfirm} />
               </View>
             </Modal>
           )}
