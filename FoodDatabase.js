@@ -152,8 +152,10 @@ const FoodDatabase = () => {
       {error && <Text>{error}</Text>}
       {searchResults && (
         <View>
-          <Text>Food: {searchResults.label}</Text>
-          <Text>Number of Calories: {Math.round(searchResults.nutrients.ENERC_KCAL)} calories</Text>
+          {searchResults.label && ( <Text>Food: {searchResults.label}</Text>)}
+          {searchResults.nutrients.ENERC_KCAL && ( <Text>Number of Calories: {Math.round(searchResults.nutrients.ENERC_KCAL)} calories</Text> )}
+          {searchResults.nutrients.PROCNT && ( <Text>Number of Proteins: {Math.round(searchResults.nutrients.PROCNT)} proteins</Text> )}
+          {searchResults.nutrients.PROCNT && ( <Text>Number of FAT: {Math.round(searchResults.nutrients.FAT)} Fat</Text> )}
           {searchResults.image && (
             <Image source={{ uri: searchResults.image }} style={{ width: 200, height: 200 }} />
           )}

@@ -61,7 +61,7 @@ export const MealPlanProvider = ({ children }) => {
     try {
       const storageMealPlan = await AsyncStorage.getItem('@mealPlanning');
       if (storageMealPlan !== null) {
-        setMealPlan(JSON.parse(storedMealPlan));
+        setMealPlan(JSON.parse(storageMealPlan));
       }
     } catch (error) {
       console.error('Error while finding meal planning from storage:', error);
