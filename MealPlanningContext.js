@@ -74,7 +74,7 @@ export const MealPlanProvider = ({ children }) => {
 
   useEffect(() => {
     if (mealPlan !== null) {
-        saveMealPlanningToStorage(mealPlan);
+      saveMealPlanningToStorage(mealPlan);
     }
   }, [mealPlan]);
 

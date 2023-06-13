@@ -14,7 +14,83 @@ import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { MealPlanContext } from './MealPlanningContext.js';
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F5F5F5',
+  },
+  searchInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  suggestionContainer: {
+    marginBottom: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+    elevation: 3,
+  },
+  suggestionItem: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    backgroundColor: '#f0f0f0',
+  },
+  suggestionList: {
+    width: '100%',
+    marginTop: 8,
+  },
+  suggestionText: {
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    //alignItems: 'center',
+  },
+  resultContainer: {
+    marginTop: 20,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  resultText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  resultImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  picker: {
+    marginBottom: 10,
+  },
+  confirmButton: {
+    marginBottom: 20,
+  },
+  button: {
+    marginTop: 10,
+    backgroundColor: '#4287f5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+});
 
 const FoodDatabase = () => {
   const [searchRequete, setSearchRequete] = useState('');
@@ -128,41 +204,62 @@ const FoodDatabase = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search for a food"
-        value={searchRequete}
-        onChangeText={handleInputChange}
-      />
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search for a food"
+          value={searchRequete}
+          onChangeText={handleInputChange}
+        />
 
-      <FlatList
-        data={suggestions}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.suggestionItem}
-            onPress={() => handleSuggestionSelection(item)}>
-            <Text>{item}</Text>
-          </TouchableOpacity>
-        )}
-      />
+        <FlatList
+          data={suggestions}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.suggestionItem}
+              onPress={() => handleSuggestionSelection(item)}>
+              <Text>{item}</Text>
+            </TouchableOpacity>
+          )}
+          style={styles.suggestionList}
+        />
+      </View>
 
-      <Button title="Search" onPress={handleSearch} />
+      <Button title="Search" onPress={handleSearch} style={styles.button} color="#4287f5" />
 
       {error && <Text>{error}</Text>}
       {searchResults && (
-        <View>
-          {searchResults.label && ( <Text>Food: {searchResults.label}</Text>)}
-          {searchResults.nutrients.ENERC_KCAL && ( <Text>Number of Calories: {Math.round(searchResults.nutrients.ENERC_KCAL)} calories</Text> )}
-          {searchResults.nutrients.PROCNT && ( <Text>Number of Proteins: {Math.round(searchResults.nutrients.PROCNT)} proteins</Text> )}
-          {searchResults.nutrients.PROCNT && ( <Text>Number of FAT: {Math.round(searchResults.nutrients.FAT)} Fat</Text> )}
+        <View style={styles.resultContainer}>
+          <Text style={styles.label}>Food :</Text>
+          {searchResults.label && <Text style={styles.resultText}>{searchResults.label}</Text>}
+
+          <Text style={styles.label}>Number of Calories :</Text>
+          {searchResults.nutrients.ENERC_KCAL && (
+            <Text style={styles.resultText}>
+              {Math.round(searchResults.nutrients.ENERC_KCAL)} calories
+            </Text>
+          )}
+
+          <Text style={styles.label}>Number of Proteins :</Text>
+          {searchResults.nutrients.PROCNT && (
+            <Text style={styles.resultText}>
+              {Math.round(searchResults.nutrients.PROCNT)} proteins
+            </Text>
+          )}
+
+          <Text style={styles.label}>Number of FAT :</Text>
+          {searchResults.nutrients.FAT && (
+            <Text style={styles.resultText}>{Math.round(searchResults.nutrients.FAT)} Fat</Text>
+          )}
+
           {searchResults.image && (
-            <Image source={{ uri: searchResults.image }} style={{ width: 200, height: 200 }} />
+            <Image source={{ uri: searchResults.image }} style={styles.resultImage} />
           )}
           <Button title="Add to Meal Plan" onPress={handleAddToMealPlan} />
           {showPicker && (
             <Modal visible={showPicker} animationType="slide">
-              <View style={styles.container}>
+              <View style={styles.modalContainer}>
                 <Text>Select Meal:</Text>
                 <Picker
                   style={styles.picker}
@@ -186,7 +283,7 @@ const FoodDatabase = () => {
                   <Picker.Item label="Saturday" value="Saturday" />
                   <Picker.Item label="Sunday" value="Sunday" />
                 </Picker>
-                <Button title="Confirm" onPress={handleConfirm} />
+                <Button style={styles.confirmButton} title="Confirm" onPress={handleConfirm} />
               </View>
             </Modal>
           )}

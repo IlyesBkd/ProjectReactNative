@@ -1,9 +1,53 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Animated } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import BMRResult from './BMRResult.js';
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  inputContainer: {
+    marginBottom: 5,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  input: {
+    width: 200,
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 20,
+    width: 200,
+  },
+  button: {
+    width: 150,
+    height: 40,
+    backgroundColor: '#FF6F61',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
 const CalculatingBMR = (age, gender, height, weight, activityLevel, healthGoal) => {
   let BMR;
@@ -57,6 +101,7 @@ const HealthGoalsForm = () => {
   const [activityLevel, setActivityLevel] = useState('');
   const [healthGoal, setHealthGoal] = useState('');
   const [bmrCalculated, setBmrCalculated] = useState(null);
+  const buttonAnimation = useState(new Animated.Value(0))[0];
 
   const handleAgeChange = (text) => {
     setAge(text);
@@ -92,47 +137,86 @@ const HealthGoalsForm = () => {
     setWeight('');
     setActivityLevel('');
     setHealthGoal('');
+
+    // Animation du bouton
+    Animated.sequence([
+      Animated.timing(buttonAnimation, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(buttonAnimation, {
+        toValue: 0,
+        duration: 200,
+        delay: 1500,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
 
-  const FormValid = () => {
-    return (
-      age !== '' &&
-      gender !== '' &&
-      height !== '' &&
-      weight !== '' &&
-      activityLevel !== '' &&
-      healthGoal !== ''
-    );
+  const FormValid = () =>
+    age !== '' &&
+    gender !== '' &&
+    height !== '' &&
+    weight !== '' &&
+    activityLevel !== '' &&
+    healthGoal !== '';
+
+  const buttonScale = buttonAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.2],
+  });
+
+  const buttonStyle = {
+    transform: [{ scale: buttonScale }],
   };
 
   return (
-    <View>
-      <View>
-        <Text>Age</Text>
-        <TextInput value={age} onChangeText={handleAgeChange} />
+    <View style={styles.container}>
+      <Text style={styles.title}>❤️ Health Goals ❤️</Text>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Age</Text>
+        <TextInput style={styles.input} value={age} onChangeText={handleAgeChange} />
       </View>
 
-      <View>
-        <Text>Gender</Text>
-        <Picker selectedValue={gender} onValueChange={handleGenderChange}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Gender</Text>
+        <Picker
+          style={styles.pickerContainer}
+          selectedValue={gender}
+          onValueChange={handleGenderChange}>
           <Picker.Item label="Masculin" value="masculin" />
           <Picker.Item label="Féminin" value="féminin" />
         </Picker>
       </View>
 
-      <View>
-        <Text>Height (in cm)</Text>
-        <TextInput value={height} onChangeText={handleHeightChange} keyboardType="numeric" />
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Height (in cm)</Text>
+        <TextInput
+          style={styles.input}
+          value={height}
+          onChangeText={handleHeightChange}
+          keyboardType="numeric"
+        />
       </View>
 
-      <View>
-        <Text>Weight (in kg)</Text>
-        <TextInput value={weight} onChangeText={handleWeightChange} keyboardType="numeric" />
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Weight (in kg)</Text>
+        <TextInput
+          style={styles.input}
+          value={weight}
+          onChangeText={handleWeightChange}
+          keyboardType="numeric"
+        />
       </View>
 
-      <View>
-        <Text>Activity level</Text>
-        <Picker selectedValue={activityLevel} onValueChange={handleActivityLevelChange}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Activity Level</Text>
+        <Picker
+          style={styles.pickerContainer}
+          selectedValue={activityLevel}
+          onValueChange={handleActivityLevelChange}>
           <Picker.Item label="Sedentary" value="sedentary" />
           <Picker.Item label="Light exercise" value="light exercise" />
           <Picker.Item label="Moderate exercise" value="moderate exercise" />
@@ -141,16 +225,21 @@ const HealthGoalsForm = () => {
         </Picker>
       </View>
 
-      <View>
-        <Text>Health goal</Text>
-        <Picker selectedValue={healthGoal} onValueChange={handleHealthGoalChange}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Health Goal</Text>
+        <Picker
+          style={styles.pickerContainer}
+          selectedValue={healthGoal}
+          onValueChange={handleHealthGoalChange}>
           <Picker.Item label="Weight loss" value="weight loss" />
           <Picker.Item label="Weight maintenance" value="weight maintenance" />
           <Picker.Item label="Weight gain" value="weight gain" />
         </Picker>
       </View>
 
-      <Button title="Submit" onPress={handleSubmit} disabled={!FormValid} />
+      <Animated.View style={[styles.button, buttonStyle]}>
+        <Button title="Calculate" onPress={handleSubmit} disabled={!FormValid} color="#FF6F61" />
+      </Animated.View>
 
       <BMRResult bmr={bmrCalculated} />
     </View>
