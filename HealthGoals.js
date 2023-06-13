@@ -96,7 +96,6 @@ const HealthGoalsForm = () => {
   const [activityLevel, setActivityLevel] = useState('');
   const [healthGoal, setHealthGoal] = useState('');
   const [bmrCalculated, setBmrCalculated] = useState(null);
-  const buttonAnimation = useState(new Animated.Value(0))[0];
 
   const handleAgeChange = (text) => {
     setAge(text);
@@ -125,6 +124,7 @@ const HealthGoalsForm = () => {
   const handleSubmit = () => {
     const bmrCalculated = CalculatingBMR(age, gender, height, weight, activityLevel, healthGoal);
     setBmrCalculated(bmrCalculated);
+  
 
     setAge('');
     setGender('');
@@ -133,21 +133,7 @@ const HealthGoalsForm = () => {
     setActivityLevel('');
     setHealthGoal('');
 
-    // Animation du bouton
-    Animated.sequence([
-      Animated.timing(buttonAnimation, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(buttonAnimation, {
-        toValue: 0,
-        duration: 200,
-        delay: 1500,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
+  }
 
   const FormValid = () =>
     age !== '' &&
@@ -157,18 +143,10 @@ const HealthGoalsForm = () => {
     activityLevel !== '' &&
     healthGoal !== '';
 
-  const buttonScale = buttonAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 1.2],
-  });
 
-  const buttonStyle = {
-    transform: [{ scale: buttonScale }],
-  };
 
   return (
     <View style={styles.container}>
-
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Age</Text>
         <TextInput style={styles.input} value={age} onChangeText={handleAgeChange} />
@@ -231,7 +209,7 @@ const HealthGoalsForm = () => {
         </Picker>
       </View>
 
-      <Animated.View style={[styles.button, buttonStyle]}>
+      <Animated.View style={[styles.button]}>
         <Button title="Calculate" onPress={handleSubmit} disabled={!FormValid} color="#FF6F61" />
       </Animated.View>
 

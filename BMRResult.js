@@ -10,7 +10,15 @@ const styles = StyleSheet.create({
 });
 
 const BMRResult = ({ bmr }) => {
-  return <Text style={styles.result}>Caloric Intake: {bmr} calories</Text>;
+  return (
+    bmr && (
+      <Text style={styles.result}>
+        Caloric Intake : <Text style={{ color: 'red' }}>{Math.round(bmr)}</Text> calories
+      </Text>
+    )
+  );
 };
+
+
 
 export default BMRResult;

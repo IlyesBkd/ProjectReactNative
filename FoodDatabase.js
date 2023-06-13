@@ -151,12 +151,13 @@ const FoodDatabase = () => {
       const response = await fetch(
         `https://api.edamam.com/api/food-database/v2/parser?app_id=190a734c&app_key=9115f8a7aefa3d9acc780dc40f6f3908&ingr=${searchRequete}&nutrition-type=cooking`
       );
+      console.log(response);
       const data = await response.json();
 
       if (data.hints.length > 0) {
         setSearchResults(data.hints[0].food);
         setError(null);
-      } else {
+      } else if (data > 0) {
         setSearchResults(null);
         setError('Food not found');
       }
@@ -201,7 +202,7 @@ const FoodDatabase = () => {
         setError(null);
       } else {
         setSearchResults(null);
-        setError('Food not found');
+         setNotFound(true);
       }
     } catch (error) {
       console.error('Error while fetching search results:', error);
