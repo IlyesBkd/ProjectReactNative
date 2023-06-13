@@ -10,11 +10,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F5F5F5',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
   inputContainer: {
     marginBottom: 5,
   },
@@ -173,7 +168,6 @@ const HealthGoalsForm = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>❤️ Health Goals ❤️</Text>
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Age</Text>
