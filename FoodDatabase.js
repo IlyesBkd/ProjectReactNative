@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons   } from '@expo/vector-icons'; 
 import {
   StyleSheet,
   View,
@@ -9,11 +10,13 @@ import {
   Modal,
   FlatList,
   TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { MealPlanContext } from './MealPlanningContext.js';
-import { MaterialIcons } from '@expo/vector-icons';
+
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +62,8 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
+    paddingTop: height * 0.08,
+    paddingHorizontal: 20,
   },
   resultContainer: {
     marginTop: 20,
@@ -84,8 +89,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   confirmButton: {
-    marginBottom: 20,
+    marginTop: 20,
+    backgroundColor: '#4287f5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+  confirmButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    marginLeft: 5,
+  },
+
   button: {
     marginTop: 10,
     backgroundColor: '#4287f5',
@@ -97,6 +115,25 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#4287f5',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    color: '#fff',
+    marginLeft: 5,
+    
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
   },
 });
 
@@ -211,6 +248,10 @@ const FoodDatabase = () => {
     }
   };
 
+  const handleBackButton = () => {
+    setShowPicker(false);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchInputContainer}>
@@ -278,16 +319,21 @@ const FoodDatabase = () => {
             />
           )}
 
-          <Button
-            title="Add to Meal Plan"
-            onPress={handleAddToMealPlan}
-            style={styles.button}
-            color="#4287f5"
-          />
+
+<TouchableOpacity style={styles.addButton} onPress={handleAddToMealPlan}>
+          <FontAwesome5 name="plus" size={16} color="#fff" />
+          <Text style={styles.addButtonText}>Add to Meal Plan</Text>
+        </TouchableOpacity>
 
           {showPicker && (
             <Modal visible={showPicker} animationType="slide">
               <View style={styles.modalContainer}>
+              <TouchableOpacity
+              style={styles.backButton}
+              onPress={handleBackButton}
+            >
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </TouchableOpacity>
                 <Text>Select Meal:</Text>
                 <Picker
                   style={styles.picker}
@@ -313,11 +359,13 @@ const FoodDatabase = () => {
                   <Picker.Item label="Saturday" value="Saturday" />
                   <Picker.Item label="Sunday" value="Sunday" />
                 </Picker>
-                <Button
-                  style={styles.confirmButton}
-                  title="Confirm"
-                  onPress={handleConfirm}
-                />
+                <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={handleConfirm}
+            >
+              <MaterialIcons name="check" size={24} color="#fff" />
+              <Text style={styles.confirmButtonText}>Confirm</Text>
+            </TouchableOpacity>
               </View>
             </Modal>
           )}
