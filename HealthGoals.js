@@ -82,16 +82,16 @@ const HealthGoalsForm = () => {
   };
 
   const handleSubmit = () => {
-    if (!age){
-      Alert.alert("Error", "You must enter your age !");
+    if (!age) {
+      Alert.alert('Error', 'You must enter your age !');
       return;
     }
-    if (!height){
-      Alert.alert("Error", "You must enter your height (in cm) !");
+    if (!height) {
+      Alert.alert('Error', 'You must enter your height (in cm) !');
       return;
     }
-    if (!weight){
-      Alert.alert("Error", "You must enter your weight (in kg) !");
+    if (!weight) {
+      Alert.alert('Error', 'You must enter your weight (in kg) !');
       return;
     }
 
@@ -185,8 +185,7 @@ const HealthGoalsForm = () => {
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={handleSubmit}
-          disabled={!age || !gender || !height || !weight || !activityLevel || !healthGoal}
-        >
+          disabled={!age || !gender || !height || !weight || !activityLevel || !healthGoal}>
           <MaterialIcons name="calculate" size={24} color="black" />
           <Text style={styles.buttonText}>Calculate</Text>
         </TouchableOpacity>

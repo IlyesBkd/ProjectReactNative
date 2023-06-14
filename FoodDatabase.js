@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
+import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import {
   StyleSheet,
   View,
@@ -9,7 +9,7 @@ import {
   Modal,
   FlatList,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
@@ -119,7 +119,7 @@ const FoodDatabase = () => {
         setError(null);
       } else {
         setSearchResults(null);
-         setNotFound(true);
+        setNotFound(true);
       }
     } catch (error) {
       console.error('Error while fetching search results:', error);
@@ -141,10 +141,7 @@ const FoodDatabase = () => {
           value={searchRequete}
           onChangeText={handleInputChange}
         />
-        <TouchableOpacity
-          style={styles.searchButton}
-          onPress={handleSearch}
-        >
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <MaterialIcons name="search" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -155,8 +152,7 @@ const FoodDatabase = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.suggestionItem}
-            onPress={() => handleSuggestionSelection(item)}
-          >
+            onPress={() => handleSuggestionSelection(item)}>
             <Text>{item}</Text>
           </TouchableOpacity>
         )}
@@ -167,9 +163,7 @@ const FoodDatabase = () => {
       {searchResults && (
         <View style={styles.resultContainer}>
           <Text style={styles.label}>Food :</Text>
-          {searchResults.label && (
-            <Text style={styles.resultText}>{searchResults.label}</Text>
-          )}
+          {searchResults.label && <Text style={styles.resultText}>{searchResults.label}</Text>}
 
           <Text style={styles.label}>Number of Calories :</Text>
           {searchResults.nutrients.ENERC_KCAL && (
@@ -187,39 +181,29 @@ const FoodDatabase = () => {
 
           <Text style={styles.label}>Number of FAT :</Text>
           {searchResults.nutrients.FAT && (
-            <Text style={styles.resultText}>
-              {Math.round(searchResults.nutrients.FAT)} Fat
-            </Text>
+            <Text style={styles.resultText}>{Math.round(searchResults.nutrients.FAT)} Fat</Text>
           )}
 
           {searchResults.image && (
-            <Image
-              source={{ uri: searchResults.image }}
-              style={styles.resultImage}
-            />
+            <Image source={{ uri: searchResults.image }} style={styles.resultImage} />
           )}
 
-
-<TouchableOpacity style={styles.addButton} onPress={handleAddToMealPlan}>
-          <FontAwesome5 name="plus" size={16} color="#fff" />
-          <Text style={styles.addButtonText}>Add to Meal Plan</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.addButton} onPress={handleAddToMealPlan}>
+            <FontAwesome5 name="plus" size={16} color="#fff" />
+            <Text style={styles.addButtonText}>Add to Meal Plan</Text>
+          </TouchableOpacity>
 
           {showPicker && (
             <Modal visible={showPicker} animationType="slide">
               <View style={styles.modalContainer}>
-              <TouchableOpacity
-              style={styles.backButton}
-              onPress={handleBackButton}
-            >
-              <Ionicons name="arrow-back" size={24} color="black" />
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.backButton} onPress={handleBackButton}>
+                  <Ionicons name="arrow-back" size={24} color="black" />
+                </TouchableOpacity>
                 <Text>Select Meal:</Text>
                 <Picker
                   style={styles.picker}
                   selectedValue={selectedMeal}
-                  onValueChange={handleMealSelection}
-                >
+                  onValueChange={handleMealSelection}>
                   <Picker.Item label="Breakfast" value="Breakfast" />
                   <Picker.Item label="Lunch" value="Lunch" />
                   <Picker.Item label="Dinner" value="Dinner" />
@@ -229,8 +213,7 @@ const FoodDatabase = () => {
                 <Picker
                   style={styles.picker}
                   selectedValue={selectedDay}
-                  onValueChange={handleDaySelection}
-                >
+                  onValueChange={handleDaySelection}>
                   <Picker.Item label="Monday" value="Monday" />
                   <Picker.Item label="Tuesday" value="Tuesday" />
                   <Picker.Item label="Wednesday" value="Wednesday" />
@@ -239,13 +222,10 @@ const FoodDatabase = () => {
                   <Picker.Item label="Saturday" value="Saturday" />
                   <Picker.Item label="Sunday" value="Sunday" />
                 </Picker>
-                <TouchableOpacity
-              style={styles.confirmButton}
-              onPress={handleConfirm}
-            >
-              <MaterialIcons name="check" size={24} color="#fff" />
-              <Text style={styles.confirmButtonText}>Confirm</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+                  <MaterialIcons name="check" size={24} color="#fff" />
+                  <Text style={styles.confirmButtonText}>Confirm</Text>
+                </TouchableOpacity>
               </View>
             </Modal>
           )}
@@ -317,7 +297,7 @@ const styles = StyleSheet.create({
   resultText: {
     fontSize: 16,
     marginBottom: 5,
-    color:'red',
+    color: 'red',
   },
   resultImage: {
     width: 200,
@@ -367,7 +347,6 @@ const styles = StyleSheet.create({
   addButtonText: {
     color: '#fff',
     marginLeft: 5,
-    
   },
   backButton: {
     position: 'absolute',

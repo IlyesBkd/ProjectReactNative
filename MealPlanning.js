@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons   } from '@expo/vector-icons'; 
+import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { MealPlanContext } from './MealPlanningContext';
 
 const MealPlanning = () => {
@@ -42,7 +42,7 @@ const MealPlanning = () => {
 
   return (
     <ScrollView>
-    <View style={styles.container}>
+      <View style={styles.container}>
         <TouchableOpacity style={styles.addButton} onPress={handleAddFood}>
           <FontAwesome5 name="plus" size={16} color="#fff" />
           <Text style={styles.addButtonText}>Add Food</Text>
@@ -67,8 +67,7 @@ const MealPlanning = () => {
                     <Text style={styles.foodLabel}>{food.label}</Text>
                     <TouchableOpacity
                       style={styles.removeButton}
-                      onPress={() => handleRemoveFood(day, meal, index)}
-                    >
+                      onPress={() => handleRemoveFood(day, meal, index)}>
                       <FontAwesome5 name="trash" size={16} color="#fff" />
                     </TouchableOpacity>
                   </View>
@@ -164,4 +163,3 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
-
