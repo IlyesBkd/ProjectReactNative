@@ -1,4 +1,4 @@
-# Meal Planning App
+# NutriPlanner App
 
 ## Team
 
