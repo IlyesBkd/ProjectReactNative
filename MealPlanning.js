@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Button, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons   } from '@expo/vector-icons'; 
 import { MealPlanContext } from './MealPlanningContext';

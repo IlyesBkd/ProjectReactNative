@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { Ionicons, FontAwesome5, MaterialIcons, MaterialCommunityIcons   } from '@expo/vector-icons'; 
+import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 import {
   StyleSheet,
   View,
   TextInput,
-  Button,
   Text,
   Image,
   Modal,
@@ -17,125 +16,6 @@ import axios from 'axios';
 import { MealPlanContext } from './MealPlanningContext.js';
 
 const { width, height } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#F5F5F5',
-  },
-  searchInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-  },
-  searchButton: {
-    marginLeft: 10,
-  },
-  suggestionContainer: {
-    marginBottom: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 5,
-    elevation: 3,
-  },
-  suggestionItem: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    backgroundColor: '#f0f0f0',
-  },
-  suggestionList: {
-    width: '100%',
-    marginTop: 8,
-  },
-  suggestionText: {
-    fontSize: 16,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: height * 0.08,
-    paddingHorizontal: 20,
-  },
-  resultContainer: {
-    marginTop: 20,
-    marginBottom: 10,
-    alignItems: 'center',
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  resultText: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  resultImage: {
-    width: 200,
-    height: 200,
-    marginBottom: 10,
-    alignSelf: 'center',
-  },
-  picker: {
-    marginBottom: 10,
-  },
-  confirmButton: {
-    marginTop: 20,
-    backgroundColor: '#4287f5',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  confirmButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    marginLeft: 5,
-  },
-
-  button: {
-    marginTop: 10,
-    backgroundColor: '#4287f5',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  addButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#4287f5',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 20,
-  },
-  addButtonText: {
-    color: '#fff',
-    marginLeft: 5,
-    
-  },
-  backButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    zIndex: 1,
-  },
-});
 
 const FoodDatabase = () => {
   const [searchRequete, setSearchRequete] = useState('');
@@ -376,3 +256,123 @@ const FoodDatabase = () => {
 };
 
 export default FoodDatabase;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F5F5F5',
+  },
+  searchInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+  },
+  searchButton: {
+    marginLeft: 10,
+  },
+  suggestionContainer: {
+    marginBottom: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+    elevation: 3,
+  },
+  suggestionItem: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    backgroundColor: '#f0f0f0',
+  },
+  suggestionList: {
+    width: '100%',
+    marginTop: 8,
+  },
+  suggestionText: {
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: height * 0.08,
+    paddingHorizontal: 20,
+  },
+  resultContainer: {
+    marginTop: 20,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  resultText: {
+    fontSize: 16,
+    marginBottom: 5,
+    color:'red',
+  },
+  resultImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  picker: {
+    marginBottom: 10,
+  },
+  confirmButton: {
+    marginTop: 20,
+    backgroundColor: '#4287f5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  confirmButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    marginLeft: 5,
+  },
+
+  button: {
+    marginTop: 10,
+    backgroundColor: '#4287f5',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#4287f5',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    color: '#fff',
+    marginLeft: 5,
+    
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
+  },
+});

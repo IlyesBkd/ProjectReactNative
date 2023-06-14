@@ -1,13 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const styles = StyleSheet.create({
-  result: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginTop: 20,
-  },
-});
+
 
 const BMRResult = ({ bmr }) => {
   return (
@@ -19,6 +13,12 @@ const BMRResult = ({ bmr }) => {
   );
 };
 
-
-
 export default BMRResult;
+
+const styles = StyleSheet.create({
+  result: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+});
