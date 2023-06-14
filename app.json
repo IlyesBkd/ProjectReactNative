@@ -4,10 +4,10 @@
     "slug": "AwesomeProject",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/NUTRIPLANNER.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/NUTRIPLANNER.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -26,7 +26,7 @@
       "package": "com.ilyes0.AwesomeProject"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/NUTRIPLANNER.png"
     },
     "extra": {
       "eas": {
