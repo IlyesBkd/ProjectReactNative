@@ -68,7 +68,7 @@ const FoodDatabase = () => {
       const response = await fetch(
         `https://api.edamam.com/api/food-database/v2/parser?app_id=190a734c&app_key=9115f8a7aefa3d9acc780dc40f6f3908&ingr=${searchRequete}&nutrition-type=cooking`
       );
-      console.log(response);
+      //console.log(response);
       const data = await response.json();
 
       if (data.hints.length > 0) {
@@ -159,30 +159,37 @@ const FoodDatabase = () => {
         style={styles.suggestionList}
       />
 
-      {error && <Text>{error}</Text>}
+      {error && <Text style={styles.error}>{error}</Text>}
       {searchResults && (
         <View style={styles.resultContainer}>
-          <Text style={styles.label}>Food :</Text>
+          <Text style={styles.label}>Food:</Text>
           {searchResults.label && <Text style={styles.resultText}>{searchResults.label}</Text>}
 
-          <Text style={styles.label}>Number of Calories :</Text>
+          <Text style={styles.label}>Number of Calories:</Text>
           {searchResults.nutrients.ENERC_KCAL && (
-            <Text style={styles.resultText}>
-              {Math.round(searchResults.nutrients.ENERC_KCAL)} calories
+            <Text>
+              <Text style={styles.resultValue}>
+                {Math.round(searchResults.nutrients.ENERC_KCAL)}
+              </Text>{' '}
+              <Text style={styles.resultUnit}>calories</Text>
             </Text>
           )}
 
-          <Text style={styles.label}>Number of Proteins :</Text>
-          {searchResults.nutrients.PROCNT && (
-            <Text style={styles.resultText}>
-              {Math.round(searchResults.nutrients.PROCNT)} proteins
-            </Text>
-          )}
+          <Text style={styles.label}>Number of Proteins:</Text>
+          <Text>
+            {searchResults.nutrients.PROCNT && (
+              <Text style={styles.resultValue}>{Math.round(searchResults.nutrients.PROCNT)}</Text>
+            )}{' '}
+            <Text style={styles.resultUnit}>proteins</Text>
+          </Text>
 
-          <Text style={styles.label}>Number of FAT :</Text>
-          {searchResults.nutrients.FAT && (
-            <Text style={styles.resultText}>{Math.round(searchResults.nutrients.FAT)} Fat</Text>
-          )}
+          <Text style={styles.label}>Number of FAT:</Text>
+          <Text>
+            {searchResults.nutrients.FAT && (
+              <Text style={styles.resultValue}>{Math.round(searchResults.nutrients.FAT)}</Text>
+            )}{' '}
+            <Text style={styles.resultUnit}>Fat</Text>
+          </Text>
 
           {searchResults.image && (
             <Image source={{ uri: searchResults.image }} style={styles.resultImage} />
@@ -206,8 +213,9 @@ const FoodDatabase = () => {
                   onValueChange={handleMealSelection}>
                   <Picker.Item label="Breakfast" value="Breakfast" />
                   <Picker.Item label="Lunch" value="Lunch" />
-                  <Picker.Item label="Dinner" value="Dinner" />
                   <Picker.Item label="Snack" value="Snack" />
+                  <Picker.Item label="Dinner" value="Dinner" />
+                  
                 </Picker>
                 <Text>Select Day:</Text>
                 <Picker
@@ -284,6 +292,11 @@ const styles = StyleSheet.create({
     paddingTop: height * 0.08,
     paddingHorizontal: 20,
   },
+  error: {
+    color: 'red',
+    fontSize: 16,
+    marginBottom: 10,
+  },
   resultContainer: {
     marginTop: 20,
     marginBottom: 10,
@@ -294,9 +307,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
   },
+  resultUnit: {
+    fontSize: 18,
+    color: 'black',
+  },
   resultText: {
     fontSize: 16,
     marginBottom: 5,
+    color: '#333',
+  },
+  resultValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
     color: 'red',
   },
   resultImage: {

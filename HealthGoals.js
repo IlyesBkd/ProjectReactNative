@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import BMRResult from './BMRResult.js';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
 
+
 const CalculatingBMR = (age, gender, height, weight, activityLevel, healthGoal) => {
   let BMR;
   if (gender === 'masculin') {
