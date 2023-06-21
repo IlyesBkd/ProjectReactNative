@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "NutriPLANNER",
-    "slug": "NutriPLANNER",
+    "name": "AwesomeProject",
+    "slug": "AwesomeProject",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/NUTRIPLANNER.png",
