@@ -215,7 +215,6 @@ const FoodDatabase = () => {
                   <Picker.Item label="Lunch" value="Lunch" />
                   <Picker.Item label="Snack" value="Snack" />
                   <Picker.Item label="Dinner" value="Dinner" />
-                  
                 </Picker>
                 <Text>Select Day:</Text>
                 <Picker
